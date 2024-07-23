@@ -28,8 +28,8 @@ jobs:
 
     - name: Run the activity script
       env:
-        GITHUB_API_URL: "https://github.lupin.com/api/v3/api/v3"
-        ACCESS_TOKEN: "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"  # Use GitHub Secrets for storing sensitive data
+        GITHUB_API_URL: "https://github.lupin.com/api/v3"
+        ACCESS_TOKEN: "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"
       run: |
         python user.py
 
