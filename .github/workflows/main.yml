@@ -1,0 +1,41 @@
+name: GitHub User Activity Report
+
+on:
+  workflow_dispatch:
+    inputs:
+      since_days:
+        description: 'Days of activity to check (default 30)'
+        required: false
+        default: 30
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests pandas openpyxl
+
+    - name: Run the activity script
+      env:
+        GITHUB_API_URL: "https://github.lupin.com/api/v3/api/v3"
+        ACCESS_TOKEN: "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"  # Use GitHub Secrets for storing sensitive data
+      run: |
+        python user.py
+
+    - name: Upload Excel file
+      uses: actions/upload-artifact@v3
+      with:
+        name: GitHub Activity Report
+        path: github_activity.xlsx
+
